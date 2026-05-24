@@ -1,0 +1,7 @@
+PORT=8000
+DB_HOST=sql5.freesqldatabase.com
+DB_USER=sql5828107
+DB_PASSWORD=Rq2S5kDcvR
+DB_NAME=sql5828107
+DB_PORT=3306
+JWT_SECRET=myMentalHealthSecret2026
