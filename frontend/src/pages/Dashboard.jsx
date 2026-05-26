@@ -22,36 +22,17 @@ function Dashboard() {
 
     <div className="min-h-screen bg-black text-white p-6 md:p-10">
 
-
-      {/* HEADER */}
-
-      <div className="
-        flex
-        flex-col
-        md:flex-row
-        justify-between
-        items-start
-        md:items-center
-        gap-5
-      ">
+      <div className="flex justify-between items-center">
 
         <div>
 
-          <h1 className="
-            text-4xl
-            md:text-6xl
-            font-extrabold
-          ">
+          <h1 className="text-5xl font-bold">
 
             Welcome {user?.name}
 
           </h1>
 
-          <p className="
-            text-gray-400
-            text-lg
-            mt-3
-          ">
+          <p className="text-gray-400 mt-2">
 
             Mental Health Support Dashboard
 
@@ -68,8 +49,6 @@ function Dashboard() {
             py-3
             rounded-xl
             font-bold
-            hover:bg-red-700
-            transition-all
           "
         >
 
@@ -80,120 +59,98 @@ function Dashboard() {
       </div>
 
 
-      {/* CARDS */}
-
       <div className="
         grid
         grid-cols-1
         md:grid-cols-2
         lg:grid-cols-3
         gap-8
-        mt-14
+        mt-16
       ">
 
-
-        {/* AI CHAT */}
 
         <Link
           to="/chat"
           className="
             bg-gradient-to-r
-            from-purple-700
-            to-fuchsia-600
+            from-yellow-500
+            to-orange-500
             p-8
             rounded-3xl
             hover:scale-105
             transition-all
-            duration-300
-            block
           "
         >
 
-          <h2 className="
-            text-3xl
-            font-bold
-            mb-5
-          ">
+          <h2 className="text-3xl font-bold mb-5">
 
             AI Emotional Support
 
           </h2>
 
-          <p className="text-lg">
+          <p>
 
-            Chat with AI emotional assistant.
+            Chat with intelligent emotional support AI.
 
           </p>
 
         </Link>
 
 
-        {/* APPOINTMENTS */}
-
-        <div
+        <Link
+          to="/appointments"
           className="
             bg-gradient-to-r
-            from-pink-700
+            from-pink-600
             to-red-600
             p-8
             rounded-3xl
             hover:scale-105
             transition-all
-            duration-300
           "
         >
 
-          <h2 className="
-            text-3xl
-            font-bold
-            mb-5
-          ">
+          <h2 className="text-3xl font-bold mb-5">
 
             Counseling Appointments
 
           </h2>
 
-          <p className="text-lg">
+          <p>
 
             Book and manage counseling sessions.
 
           </p>
 
-        </div>
+        </Link>
 
 
-        {/* FORUMS */}
-
-        <div
+        <Link
+          to="/forums"
           className="
             bg-gradient-to-r
-            from-indigo-700
-            to-purple-600
+            from-purple-700
+            to-indigo-700
             p-8
             rounded-3xl
             hover:scale-105
             transition-all
-            duration-300
           "
         >
 
-          <h2 className="
-            text-3xl
-            font-bold
-            mb-5
-          ">
+          <h2 className="text-3xl font-bold mb-5">
 
             Youth Support Forums
 
           </h2>
 
-          <p className="text-lg">
+          <p>
 
             Join supportive community discussions.
 
           </p>
 
-        </div>
+        </Link>
 
       </div>
 

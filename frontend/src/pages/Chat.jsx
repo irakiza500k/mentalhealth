@@ -1,9 +1,12 @@
 import { useState } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 
 function Chat() {
 
   const [message, setMessage] = useState("");
+
+  const [loading, setLoading] = useState(false);
 
   const [messages, setMessages] = useState([
     {
@@ -13,7 +16,7 @@ function Chat() {
   ]);
 
 
-  const sendMessage = () => {
+  const sendMessage = async () => {
 
     if (!message.trim()) return;
 
@@ -26,54 +29,42 @@ function Chat() {
 
     setMessages((prev) => [...prev, userMessage]);
 
-
-    let aiReply =
-      "I understand how you feel. Remember you are not alone 💛";
-
-
-    if (message.toLowerCase().includes("sad")) {
-
-      aiReply =
-        "I'm sorry you're feeling sad. Talking about your emotions can help 💛";
-
-    }
-
-    else if (message.toLowerCase().includes("stress")) {
-
-      aiReply =
-        "Stress can be overwhelming. Try breathing exercises and taking short breaks 🌿";
-
-    }
-
-    else if (message.toLowerCase().includes("depressed")) {
-
-      aiReply =
-        "You matter and your feelings are valid. Consider talking with someone you trust 💛";
-
-    }
-
-    else if (message.toLowerCase().includes("happy")) {
-
-      aiReply =
-        "That's wonderful 🌟 Keep spreading positivity and taking care of yourself.";
-
-    }
-
-
-    setTimeout(() => {
-
-      setMessages((prev) => [
-        ...prev,
-        {
-          sender: "bot",
-          text: aiReply
-        }
-      ]);
-
-    }, 1000);
-
-
     setMessage("");
+
+    setLoading(true);
+
+
+    try {
+
+      const response = await axios.post(
+        "http://localhost:8000/api/ai/chat",
+        {
+          message
+        }
+      );
+
+
+      const aiMessage = {
+        sender: "bot",
+        text: response.data.reply
+      };
+
+
+      setMessages((prev) => [...prev, aiMessage]);
+
+    }
+
+    catch (error) {
+
+      console.log(error);
+
+    }
+
+    finally {
+
+      setLoading(false);
+
+    }
 
   };
 
@@ -124,7 +115,7 @@ function Chat() {
       </div>
 
 
-      {/* CHAT AREA */}
+      {/* CHAT */}
 
       <div className="
         flex-1
@@ -150,10 +141,28 @@ function Chat() {
 
         ))}
 
+
+        {loading && (
+
+          <div className="
+            bg-[#1a1a1a]
+            border
+            border-yellow-500/20
+            p-4
+            rounded-2xl
+            w-fit
+          ">
+
+            AI is typing...
+
+          </div>
+
+        )}
+
       </div>
 
 
-      {/* INPUT AREA */}
+      {/* INPUT */}
 
       <div className="
         border-t

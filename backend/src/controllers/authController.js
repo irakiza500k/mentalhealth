@@ -4,22 +4,19 @@ import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 
 
-// ================= REGISTER =================
+// REGISTER
 
 export const register = async (req, res) => {
 
   try {
 
-    const {
-      username,
-      email,
-      password
-    } = req.body;
+    const { name, email, password } = req.body;
 
-    // Check existing user
+
     const existingUser = await User.findOne({
       where: { email }
     });
+
 
     if (existingUser) {
 
@@ -30,18 +27,16 @@ export const register = async (req, res) => {
 
     }
 
-    // Hash password
-    const hashedPassword = await bcrypt.hash(
-      password,
-      10
-    );
 
-    // Create user
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+
     const user = await User.create({
-      username,
+      name,
       email,
-      password: hashedPassword,
+      password: hashedPassword
     });
+
 
     res.status(201).json({
       success: true,
@@ -49,7 +44,9 @@ export const register = async (req, res) => {
       user
     });
 
-  } catch (error) {
+  }
+
+  catch (error) {
 
     console.log(error);
 
@@ -63,21 +60,19 @@ export const register = async (req, res) => {
 };
 
 
-// ================= LOGIN =================
+// LOGIN
 
 export const login = async (req, res) => {
 
   try {
 
-    const {
-      email,
-      password
-    } = req.body;
+    const { email, password } = req.body;
 
-    // Find user
+
     const user = await User.findOne({
       where: { email }
     });
+
 
     if (!user) {
 
@@ -88,11 +83,12 @@ export const login = async (req, res) => {
 
     }
 
-    // Compare passwords
+
     const isMatch = await bcrypt.compare(
       password,
       user.password
     );
+
 
     if (!isMatch) {
 
@@ -103,25 +99,43 @@ export const login = async (req, res) => {
 
     }
 
-    // Generate token
+
     const token = jwt.sign(
+
       {
         id: user.id
       },
-      "supersecretkey",
+
+      process.env.JWT_SECRET,
+
       {
         expiresIn: "7d"
       }
+
     );
 
+
     res.status(200).json({
+
       success: true,
-      message: "Login successful",
+
       token,
-      user
+
+      user: {
+
+        id: user.id,
+
+        name: user.name,
+
+        email: user.email
+
+      }
+
     });
 
-  } catch (error) {
+  }
+
+  catch (error) {
 
     console.log(error);
 
